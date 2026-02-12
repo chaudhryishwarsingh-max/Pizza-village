@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<title>Pizza Village</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pizza Village - Udaipur</title>
 
 <style>
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  background: #fff8f0;
+  background: #fff5f0;
+  text-align: center;
 }
 
 header {
-  background: #c62828;
+  background: #e63946;
   color: white;
   padding: 20px;
-  text-align: center;
 }
 
 .logo {
@@ -29,33 +28,35 @@ header {
 
 .item {
   background: white;
+  margin: 15px;
   padding: 15px;
-  margin: 12px 0;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
 }
 
 button {
-  background: #c62828;
+  background: #e63946;
   color: white;
   border: none;
-  padding: 8px 15px;
+  padding: 8px 16px;
   border-radius: 6px;
   cursor: pointer;
 }
 
 button:hover {
-  background: #a81d1d;
+  background: #c1121f;
 }
 
 .cart {
   background: white;
-  padding: 15px;
-  box-shadow: 0 -2px 6px rgba(0,0,0,0.2);
+  padding: 20px;
+  margin: 20px;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
 }
 
 input {
-  width: 100%;
+  width: 90%;
   padding: 8px;
   margin: 6px 0;
   border-radius: 6px;
@@ -69,7 +70,7 @@ input {
 <header>
 <img src="https://i.imgur.com/7yUvePI.png" class="logo">
 <h2>Pizza Village</h2>
-<p>Fresh Dough Fresh Ingredients</p>
+<p>Fresh Dough • Fresh Ingredients</p>
 <p>📍 Udaipur | ⏰ 10 AM – 11 PM</p>
 </header>
 
@@ -77,24 +78,21 @@ input {
 <h3>🍕 Our Menu</h3>
 
 <div class="item">
-<h4>Margherita Pizza - ₹199</h4>
-<button onclick="addToCart('Margherita Pizza - ₹199')">Add</button>
-</div>
-
-<div class="item">
 <h4>Farmhouse Pizza - ₹249</h4>
-<button onclick="addToCart('Farmhouse Pizza - ₹249')">Add</button>
+<button onclick="addToCart('Farmhouse Pizza', 249)">Add</button>
 </div>
 
 <div class="item">
-<h4>Paneer Tikka Pizza - ₹299</h4>
-<button onclick="addToCart('Paneer Tikka Pizza - ₹299')">Add</button>
+<h4>Margherita Pizza - ₹199</h4>
+<button onclick="addToCart('Margherita Pizza', 199)">Add</button>
 </div>
 
 </div>
 
 <div class="cart">
-<h4>🧾 Customer Details</h4>
+<h3>🧾 Customer Details</h3>
+<h4>Total Amount: ₹ <span id="total">0</span></h4>
+
 <input type="text" id="name" placeholder="Your Name">
 <input type="text" id="address" placeholder="Delivery Address">
 
@@ -105,20 +103,24 @@ input {
 
 <script>
 let cart = [];
+let total = 0;
 
-function addToCart(item) {
+function addToCart(item, price) {
   cart.push(item);
+  total += price;
+  document.getElementById("total").innerText = total;
   alert(item + " added to cart");
 }
 
 function orderWhatsApp() {
-  let name = document.getElementById("name").value;
-  let address = document.getElementById("address").value;
 
-  if (cart.length == 0) {
+  if(cart.length == 0){
     alert("Please add items first");
     return;
   }
+
+  let name = document.getElementById("name").value;
+  let address = document.getElementById("address").value;
 
   let message = "Pizza Order%0A";
   message += "Name: " + name + "%0A";
@@ -129,7 +131,9 @@ function orderWhatsApp() {
     message += "- " + item + "%0A";
   });
 
-  window.open("https://wa.me/919376414114?text=" + message);
+  message += "Total Amount: ₹" + total;
+
+  window.open("https://wa.me/919137641414?text=" + message);
 }
 </script>
 
